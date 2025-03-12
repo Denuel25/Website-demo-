@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hateless Foundation</title>
+    <style>
+        /* Base styles and reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #ff8c42;
+            --text-color: #333333;
+            --light-bg: #f8f9fa;
+            --dark-bg: #343a40;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            margin-bottom: 0.75rem;
+        }
+
+        p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            margin-bottom: 1rem;
+        }
+
+        /* Layout */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        /* Navigation styles */
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 0.5rem 0;
+        }
+
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Hamburger menu */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/api/placeholder/1200/600') no-repeat center/cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            color: white;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-content p {
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            margin-bottom: 2rem;
+        }
+
+        /* Mission Section */
+        .mission {
+            padding: 5rem 0;
+            background-color: var(--light-bg);
+            text-align: center;
+        }
+
+        .stats {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 2rem 0;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .image-card {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .image-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .image-card .caption {
+            padding: 1rem;
+            background-color: white;
+        }
+
+        /* About Section */
+        .about {
+            padding: 5rem 0;
+            background-color: white;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .about-card {
+            background-color: var(--light-bg);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .about-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .about-card img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 1rem;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .about-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        /* Support Section */
+        .support {
+            padding: 5rem 0;
+            background-color: var(--light-bg);
+            text-align: center;
+        }
+
+        .cta-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: background-color 0.3s, transform 0.3s;
+            min-width: 180px;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        .donation-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .donation-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .donation-form {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .donation-form h3 {
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input, 
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .amount-options {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .amount-option {
+            flex: 1;
+            min-width: 70px;
+        }
+
+        .amount-option input[type="radio"] {
+            display: none;
+        }
+
+        .amount-option label {
+            display: block;
+            padding: 0.5rem;
+            text-align: center;
+            background-color: var(--light-bg);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .amount-option input[type="radio"]:checked + label {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .custom-amount {
+            margin-top: 1rem;
+        }
+
+        .form-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .close-modal {
+            cursor: pointer;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            color: white;
+            background: none;
+            border: none;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-bg);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: var(--secondary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            pointer-events: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            /* Header adjustments */
+            .header-container {
+                padding: 1rem;
+            }
+
+            .hamburger {
+                display: block;
+                z-index: 2000;
+            }
+
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background-color: white;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+                transition: right 0.3s ease-in-out;
+                z-index: 1500;
+                padding-top: 5rem;
+            }
+
+            nav.active {
+                right: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav ul li {
+                margin: 1rem 0;
+                width: 100%;
+                text-align: center;
+            }
+
+            nav ul li a {
+                display: block;
+                padding: 1rem;
+            }
+
+            /* Section adjustments */
+            .hero {
+                margin-top: 3.5rem;
+            }
+
+            .about-grid, .cta-buttons, .image-grid {
+                gap: 1rem;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            /* Back to top position adjustment */
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 40px;
+                height: 40px;
+            }
+
+            /* Form adjustments */
+            .amount-options {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .amount-option {
+                width: 100%;
+            }
+
+            .form-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .form-buttons .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <img src="/api/placeholder/80/40" alt="Hateless Foundation Logo" loading="lazy">
+                Hateless Foundation
+            </a>
+            <button class="hamburger" aria-label="Toggle navigation menu">☰</button>
+            <nav>
+                <ul>
+                    <li><a href="#mission">Our Mission</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#support">Support</a></li>
+                    <li><a href="#help">Help</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Live Hateless</h1>
+            <p>We serve underserved people worldwide, helping with Food, clothing, and Education to empower them to overcome challenges and fulfill their purpose.</p>
+            <a href="#" class="btn donate-btn">Donate Now</a>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section id="mission" class="mission">
+        <div class="container">
+            <h2>Our Mission</h2>
+            <div class="stats">100,000+</div>
+            <p>We serve underserved people worldwide, helping with Food, clothing, and Education to empower them to overcome challenges and fulfill their purpose. Through partnerships, advocacy and ensuring the voices of young people are heard, we're striving for a better future for Australia's most vulnerable.</p>
+            
+            <div class="image-grid">
+                <div class="image-card">
+                    <img src="/api/placeholder/400/300" alt="Education programs for children" loading="lazy">
+                    <div class="caption">
+                        <h3>Education</h3>
+                        <p>Providing educational opportunities to underserved communities.</p>
+                    </div>
+                </div>
+                <div class="image-card">
+                    <img src="/api/placeholder/400/300" alt="Food distribution program" loading="lazy">
+                    <div class="caption">
+                        <h3>Food</h3>
+                        <p>Distributing nutritious meals to families in need.</p>
+                    </div>
+                </div>
+                <div class="image-card">
+                    <img src="/api/placeholder/400/300" alt="Clothing donation initiative" loading="lazy">
+                    <div class="caption">
+                        <h3>Clothing</h3>
+                        <p>Providing essential clothing to communities worldwide.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2>About Us</h2>
+            <p>We serve underserved people worldwide, helping with Food, clothing, and Education to empower them to overcome challenges and fulfill their purpose.</p>
+            
+            <div class="about-grid">
+                <div class="about-card">
+                    <img src="/api/placeholder/160/160" alt="Volunteer icon" loading="lazy">
+                    <h3>Become a Volunteer</h3>
+                    <p>Join our team and help make a difference in communities around the world.</p>
+                    <a href="#" class="btn">Get Started</a>
+                </div>
+                
+                <div class="about-card">
+                    <img src="/api/placeholder/160/160" alt="Partner icon" loading="lazy">
+                    <h3>Become a Partner</h3>
+                    <p>Partner with us to expand our reach and impact more lives globally.</p>
+                    <a href="#" class="btn">Join Us</a>
+                </div>
+                
+                <div class="about-card">
+                    <img src="/api/placeholder/160/160" alt="Advocate icon" loading="lazy">
+                    <h3>Become an Advocate</h3>
+                    <p>Raise awareness and help us advocate for those who don't have a voice.</p>
+                    <a href="#" class="btn">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Support Section -->
+    <section id="support" class="support">
+        <div class="container">
+            <h2>Support Beyond Borders</h2>
+            <p>Be inspired. Get involved. Your support helps us continue our mission to serve underserved communities around the world.</p>
+            
+            <div class="cta-buttons">
+                <a href="#" class="btn donate-btn">Donate Now</a>
+                <a href="#" class="btn">Start a Fundraiser</a>
+                <a href="#" class="btn">Sponsor a Child</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Donation Modal -->
+    <div class="donation-modal" id="donationModal">
+        <button class="close-modal" aria-label="Close donation form">×</button>
+        <div class="donation-form">
+            <h3>Make a Donation</h3>
+            <form id="donateForm">
+                <div class="form-group">
+                    <label>Select Amount</label>
+                    <div class="amount-options">
+                        <div class="amount-option">
+                            <input type="radio" name="amount" id="amount25" value="25" checked>
+                            <label for="amount25">$25</label>
+                        </div>
+                        <div class="amount-option">
+                            <input type="radio" name="amount" id="amount50" value="50">
+                            <label for="amount50">$50</label>
+                        </div>
+                        <div class="amount-option">
+                            <input type="radio" name="amount" id="amount100" value="100">
+                            <label for="amount100">$100</label>
+                        </div>
+                        <div class="amount-option">
+                            <input type="radio" name="amount" id="amount200" value="200">
+                            <label for="amount200">$200</label>
+                        </div>
+                    </div>
+                    <div class="custom-amount">
+                        <input type="radio" name="amount" id="amountCustom" value="custom">
+                        <label for="amountCustom">Custom Amount:</label>
+                        <input type="number" id="customAmountInput" placeholder="Enter amount" min="1" disabled>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="donationType">Donation Type</label>
+                    <select id="donationType" name="donationType">
+                        <option value="oneTime">One-time Donation</option>
+                        <option value="monthly">Monthly Recurring</option>
+                        <option value="quarterly">Quarterly Recurring</option>
+                        <option value="annually">Annual Recurring</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="dedicateOption">Dedicate this donation?</label>
+                    <select id="dedicateOption" name="dedicateOption">
+                        <option value="no">No dedication</option>
+                        <option value="honor">In Honor of Someone</option>
+                        <option value="memory">In Memory of Someone</option>
+                    </select>
+                </div>
+                
+                <div class="form-buttons">
+                    <button type="button" class="btn" id="closeModal">Cancel</button>
+                    <button type="submit" class="btn" style="background-color: var(--secondary-color);">Proceed to Payment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="help">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p>Email: info@hatelessfoundation.org</p>
+                    <p>Phone: +1 (123) 456-7890</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#mission">Our Mission</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#support">Support</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Help</h3>
+                    <ul>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Resources</a></li>
+                        <li><a href="#">Volunteer Opportunities</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Hateless Foundation. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top" aria-label="Back to top">↑</a>
+
+    <!-- JavaScript -->
+    <script>
+        // Hamburger menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const nav = document.querySelector('nav');
+        
+        hamburger.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!nav.contains(e.target) && !hamburger.contains(e.target) && nav.classList.contains('active')) {
+                nav.classList.remove('active');
+            }
+        });
+        
+        // Close menu when clicking on nav links
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('active');
+            });
+        });
+        
+        // Back to top button
+        const backToTop = document.querySelector('.back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+        
+        backToTop.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Donation Modal
+        const donationModal = document.getElementById('donationModal');
+        const donateButtons = document.querySelectorAll('.donate-btn');
+        const closeModalBtn = document.getElementById('closeModal');
+        const closeX = document.querySelector('.close-modal');
+        
+        donateButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                donationModal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+            });
+        });
+        
+        function closeModal() {
+            donationModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        closeModalBtn.addEventListener('click', closeModal);
+        closeX.addEventListener('click', closeModal);
+        
+        // Close modal when clicking outside
+        donationModal.addEventListener('click', (e) => {
+            if (e.target === donationModal) {
+                closeModal();
+            }
+        });
+        
+        // Escape key to close modal
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && donationModal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+        
+        // Custom amount toggle
+        const customAmountRadio = document.getElementById('amountCustom');
+        const customAmountInput = document.getElementById('customAmountInput');
+        
+        customAmountRadio.addEventListener('change', () => {
+            customAmountInput.disabled = !customAmountRadio.checked;
+            if (customAmountRadio.checked) {
+                customAmountInput.focus();
+            }
+        });
+        
+        customAmountInput.addEventListener('click', () => {
+            customAmountRadio.checked = true;
+            customAmountInput.disabled = false;
+        });
+        
+        // Form submission (just for demo)
+        const donateForm = document.getElementById('donateForm');
+        
+        donateForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your donation! This would normally redirect to a secure payment processor.');
+            closeModal();
+        });
+        
+        // Add ARIA attributes to improve accessibility
+        const menuItems = document.querySelectorAll('nav ul li a');
+        menuItems.forEach(item => {
+            item.setAttribute('aria-current', 'page');
+        });
+    </script>
+</body>
+</html>
